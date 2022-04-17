@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.Objects;
 
 public class Manager {
-        private int generatorId = 0;
+        private int generatorId;
         private HashMap<Integer,Task> tasks = new HashMap<>();
         private HashMap<Integer,Epic> epics = new HashMap<>();
         private HashMap<Integer, Subtask> subtasks = new HashMap<>();
@@ -36,7 +36,7 @@ public class Manager {
          * Получение задачи по идентификатору
          */
         public Task getTaskById(int id) {
-                return tasks.get(id);
+            return tasks.get(id);
         }
 
         /**
@@ -100,6 +100,7 @@ public class Manager {
         public Epic createEpic(Epic epic) {
             epic.setId(++generatorId);
             epics.put(epic.getId(), epic);
+            epic.setSubtasks(new ArrayList<>());
             setEpicStatus(epic);
             return epic;
         }
@@ -157,15 +158,13 @@ public class Manager {
          * Создать подзадачу
          */
         public Subtask createSubtask(Subtask subtask) {
-            subtask.setId(++generatorId);
-            subtasks.put(subtask.getId(), subtask);
-
             if (epics.containsKey(subtask.getEpicId())) {
                 Epic epic = epics.get(subtask.getEpicId());
                 epic.getSubtasks().add(subtask);
-
+                subtask.setId(++generatorId);
+                subtasks.put(subtask.getId(), subtask);
+                setEpicStatus(epics.get(subtask.getEpicId()));
             }
-            setEpicStatus(epics.get(subtask.getEpicId()));
             return subtask;
         }
 
@@ -183,9 +182,9 @@ public class Manager {
             if (!subtasks.containsKey(subtask.getEpicId())) {
                 return;
             }
-                subtasks.put(subtask.getId(), subtask);
-                updateEpic(epics.get(subtask.getEpicId()));
-                setEpicStatus(epics.get(subtask.getEpicId()));
+            subtasks.put(subtask.getId(), subtask);
+            updateEpic(epics.get(subtask.getEpicId()));
+            setEpicStatus(epics.get(subtask.getEpicId()));
         }
 
         /**
