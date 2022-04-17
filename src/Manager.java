@@ -100,7 +100,6 @@ public class Manager {
         public Epic createEpic(Epic epic) {
             epic.setId(++generatorId);
             epics.put(epic.getId(), epic);
-            epic.setSubtasks(new ArrayList<>());
             setEpicStatus(epic);
             return epic;
         }
