@@ -5,8 +5,8 @@ public class Main {
     public static void main(String[] args) {
         Manager manager = new Manager();
 
-        Task task1 = new Task("Task #1", "Task description", 0,Status.NEW);
-        Task task2 = new Task("Task #2", "Task description", 0,Status.NEW);
+        Task task1 = new Task("Task #1", "Task description",Status.NEW);
+        Task task2 = new Task("Task #2", "Task description",Status.NEW);
         Task task01 = manager.createTask(task1);
         Task task02 = manager.createTask(task2);
 
@@ -17,9 +17,9 @@ public class Main {
 
         Subtask subtask1 = new Subtask("Subtask #1", "Subtask description", 0, Status.NEW,
                 epic01.getId());
-        Subtask subtask2 = new Subtask("Subtask #2", "Subtask description", 0, Status.DONE,
+        Subtask subtask2 = new Subtask("Subtask #2", "Subtask description", 0, Status.IN_PROGRESS,
                 epic01.getId());
-        Subtask subtask3 = new Subtask("Subtask #3", "Subtask description", 0, Status.NEW,
+        Subtask subtask3 = new Subtask("Subtask #3", "Subtask description", 0, Status.DONE,
                 epic02.getId());
         Subtask subtask01 = manager.createSubtask(subtask1);
         Subtask subtask02 = manager.createSubtask(subtask2);
@@ -30,15 +30,17 @@ public class Main {
         printAll(manager);
 
 
+
+
     }
 
     private static void printAll (Manager manager) {
         System.out.println("Tasks: ");
-        for (Task task : manager.getTaskList()) {
+        for (Task task : manager.getTasks()) {
             System.out.println(task);
         }
         System.out.println("Epics: ");
-        for (Epic epic : manager.getEpicList()) {
+        for (Epic epic : manager.getEpics()) {
             System.out.println(epic);
             System.out.println(epic.getName() + " subtasks:");
             for (Task subtask : epic.getSubtasks()) {
