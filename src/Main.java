@@ -30,11 +30,17 @@ public class Main {
         Subtask subtask03 = manager.createSubtask(subtask3);
         manager.updateEpic(epic01);
         manager.updateEpic(epic02);
+
         printAll(manager);
+        manager.getTaskById(1);
+        manager.getEpicById(3);
+        manager.getSubtaskById(5);
+        manager.getSubtaskById(6);
+
         System.out.println("HISTORY:");
-        System.out.println(Managers.getDefaultHistory().getHistory().size());
-
-
+        for (Task task : manager.getHistory()) {
+            System.out.println(task);
+        }
 
     }
 

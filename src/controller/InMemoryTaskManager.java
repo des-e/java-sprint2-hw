@@ -153,8 +153,10 @@ public class InMemoryTaskManager implements Manager {
             if (!subtasks.containsKey(subtask.getEpicId())) {
                 return;
             }
-            epics.get(subtask.getEpicId()).getSubtasks().remove(subtask.getId());
+            epics.get(subtask.getEpicId()).getSubtasks().remove(subtask);
             subtasks.put(subtask.getId(), subtask);
+            epics.get(subtask.getEpicId()).getSubtasks().add(subtask);
+
             setEpicStatus(epics.get(subtask.getEpicId()));
         }
 
