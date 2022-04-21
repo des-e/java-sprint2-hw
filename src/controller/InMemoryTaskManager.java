@@ -1,3 +1,10 @@
+package controller;
+
+import model.Epic;
+import model.Subtask;
+import model.Task;
+import model.Status;
+
 /**
  *
  * Менеджер задач. Основной класс с методами трекера задач
@@ -5,54 +12,42 @@
  */
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Objects;
 
-public class Manager {
+public class InMemoryTaskManager implements Manager {
         private int generatorId;
-        private HashMap<Integer,Task> tasks = new HashMap<>();
-        private HashMap<Integer,Epic> epics = new HashMap<>();
+        private HashMap<Integer, Task> tasks = new HashMap<>();
+        private HashMap<Integer, Epic> epics = new HashMap<>();
         private HashMap<Integer, Subtask> subtasks = new HashMap<>();
+        private HistoryManager historyManager = Managers.getDefaultHistory();
 
-        /**
-         *
-         * Получаем список всех задач
-         */
+        @Override
         public ArrayList<Task> getTasks() {
             return new ArrayList<>(tasks.values());
         }
 
-        /**
-         *
-         * Удаление всех задач
-         */
+        @Override
         public void deleteAllTask() {
                 tasks.clear();
         }
 
-        /**
-         *
-         * Получение задачи по идентификатору
-         */
+        @Override
         public Task getTaskById(int id) {
-            return tasks.get(id);
+            Task task = tasks.get(id);
+            historyManager.addTaskToHistory(task);
+            return task;
         }
 
-        /**
-         *
-         * Создать задачу
-         */
+        @Override
         public Task createTask(Task task) {
             task.setId(++generatorId);
             tasks.put(task.getId(), task);
             return task;
         }
 
-        /**
-         *
-         * Обновление задачи. Новая версия объекта
-         */
+        @Override
         public void updateTask(Task task) {
             if (!tasks.containsKey((task.getId()))) {
                  return;
@@ -60,43 +55,30 @@ public class Manager {
             tasks.put(task.getId(), task);
         }
 
-        /**
-         *
-         * Удаление задачи по идентификатору
-         */
+        @Override
         public void deleteTask(int id) {
             tasks.remove(id);
         }
 
-        /**
-         *
-         * Получаем список всех эпиков
-         */
+        @Override
         public ArrayList<Epic> getEpics() {
             return new ArrayList<>(epics.values());
         }
 
-        /**
-         *
-         * Удаление всех эпиков
-         */
+        @Override
         public void deleteAllEpics() {
             epics.clear();
             subtasks.clear();
         }
 
-        /**
-         *
-         * Получение эпика по идентификатору
-         */
+        @Override
         public Task getEpicById(int id) {
-            return epics.get(id);
+            Epic epic = epics.get(id);
+            historyManager.addTaskToHistory(epic);
+            return epic;
         }
 
-        /**
-         *
-         * Создать эпик
-         */
+        @Override
         public Epic createEpic(Epic epic) {
             epic.setId(++generatorId);
             epics.put(epic.getId(), epic);
@@ -104,10 +86,7 @@ public class Manager {
             return epic;
         }
 
-        /**
-         *
-         * Обновление эпика. Новая версия объекта
-         */
+        @Override
         public void updateEpic(Epic epic) {
             if (!tasks.containsKey((epic.getId()))) {
                 return;
@@ -115,27 +94,18 @@ public class Manager {
             tasks.put(epic.getId(), epic);
         }
 
-        /**
-         *
-         * Удаление задачи по идентификатору
-         */
+        @Override
         public void deleteEpic(int id) {
             epics.get(id).getSubtasks().clear();
             epics.remove(id);
         }
 
-        /**
-         *
-         * Получаем список всех подзадач
-         */
+        @Override
         public ArrayList<Task> getSubtasks() {
             return new ArrayList<>(subtasks.values());
         }
 
-        /**
-         *
-         * Удаление всех подзадач
-         */
+        @Override
         public void deleteAllSubtask() {
             for (Epic epic : getEpics()) {
                 epic.getSubtasks().clear();
@@ -144,18 +114,14 @@ public class Manager {
             subtasks.clear();
         }
 
-        /**
-         *
-         * Получение подзадачи по идентификатору
-         */
+        @Override
         public Subtask getSubtaskById(int id) {
-            return subtasks.get(id);
+            final Subtask subtask = subtasks.get(id);
+            historyManager.addTaskToHistory(subtask);
+            return subtask;
         }
 
-        /**
-         *
-         * Создать подзадачу
-         */
+        @Override
         public Subtask createSubtask(Subtask subtask) {
             if (epics.containsKey(subtask.getEpicId())) {
                 Epic epic = epics.get(subtask.getEpicId());
@@ -167,10 +133,7 @@ public class Manager {
             return subtask;
         }
 
-        /**
-         *
-         * Обновление подзадачи. Новая версия объекта
-         */
+        @Override
         public void updateSubtask(Subtask subtask) {
             if (Objects.isNull(subtask.getEpicId())) {
                 return;
@@ -186,10 +149,7 @@ public class Manager {
             setEpicStatus(epics.get(subtask.getEpicId()));
         }
 
-        /**
-        *
-        * Удаление подзадачи по идентификатору
-        */
+        @Override
         public void deleteSubtask(int id) {
             int epicId = subtasks.get(id).getEpicId();
             epics.get(epicId).getSubtasks().remove(getSubtaskById(id));

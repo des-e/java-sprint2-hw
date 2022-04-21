@@ -1,4 +1,4 @@
-/**
+package model; /**
  *
  *  Эпик. Хранит в себе подзадачи.
  *
@@ -26,7 +26,7 @@ public class Epic extends Task{
         return "Name: '" + getName() + '\'' +
                 ", Description: '" + getDescription() + '\'' +
                 ", id = " + getId() +
-                ", Status: '" + getStatus() + '\'' +
+                ", model.Status: '" + getStatus() + '\'' +
                 ", Total subtasks: '" + getSubtasks().size() + '\'' +
                 '}';
     }
