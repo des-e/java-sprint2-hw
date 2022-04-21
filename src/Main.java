@@ -32,7 +32,7 @@ public class Main {
         manager.updateEpic(epic02);
         printAll(manager);
         System.out.println("HISTORY:");
-        System.out.println(manager.getHistory());
+        System.out.println(Managers.getDefaultHistory().getHistory().size());
 
 
 
