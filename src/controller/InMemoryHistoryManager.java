@@ -22,7 +22,8 @@ public class InMemoryHistoryManager implements HistoryManager {
         if (history.size() < 10) {
             history.add(task);
         } else {
-            history.add(0,task);
+            history.removeFirst();
+            history.add(task);
         }
     }
 }

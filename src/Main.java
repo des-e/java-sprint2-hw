@@ -33,7 +33,6 @@ public class Main {
         manager.updateEpic(epic01);
         manager.updateEpic(epic02);
         printAll((InMemoryTaskManager) manager);
-
     }
 
     private static void printAll (InMemoryTaskManager manager) {
