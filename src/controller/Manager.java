@@ -120,4 +120,11 @@ public interface Manager {
      * Удаление подзадачи по идентификатору
      */
     void deleteSubtask(int id);
+
+    /**
+     *
+     * Получить список истории.
+     */
+    List<Task> getHistory();
+
 }

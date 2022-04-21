@@ -8,7 +8,6 @@ public class Main {
 
     public static void main(String[] args) {
         Manager manager = Managers.getDefault();
-        HistoryManager history = Managers.getDefaultHistory();
 
         Task task1 = new Task("model.Task #1", "model.Task description",Status.NEW);
         Task task2 = new Task("model.Task #2", "model.Task description", Status.NEW);
@@ -29,10 +28,10 @@ public class Main {
         Subtask subtask01 = manager.createSubtask(subtask1);
         Subtask subtask02 = manager.createSubtask(subtask2);
         Subtask subtask03 = manager.createSubtask(subtask3);
-
         manager.updateEpic(epic01);
         manager.updateEpic(epic02);
         printAll((InMemoryTaskManager) manager);
+
     }
 
     private static void printAll (InMemoryTaskManager manager) {

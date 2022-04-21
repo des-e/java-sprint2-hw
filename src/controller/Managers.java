@@ -7,8 +7,9 @@ package controller;
 
 public class Managers {
 
-    private static InMemoryTaskManager inMemoryTaskManager;
-    private static InMemoryHistoryManager inHistoryManager;
+    private static HistoryManager inHistoryManager;
+    private static Manager inMemoryTaskManager;
+
 
     static {
         inMemoryTaskManager = new InMemoryTaskManager();
