@@ -30,11 +30,15 @@ public class Main {
         Subtask subtask03 = manager.createSubtask(subtask3);
         manager.updateEpic(epic01);
         manager.updateEpic(epic02);
-        printAll((InMemoryTaskManager) manager);
+        printAll(manager);
+        System.out.println("HISTORY:");
+        System.out.println(manager.getHistory());
+
+
 
     }
 
-    private static void printAll (InMemoryTaskManager manager) {
+    private static void printAll (Manager manager) {
         System.out.println("Tasks: ");
         for (Task task : manager.getTasks()) {
             System.out.println(task);

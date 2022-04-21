@@ -12,8 +12,8 @@ public class Managers {
 
 
     static {
-        inMemoryTaskManager = new InMemoryTaskManager();
         inHistoryManager = new InMemoryHistoryManager();
+        inMemoryTaskManager = new InMemoryTaskManager();
     }
 
     public static Manager getDefault() {
