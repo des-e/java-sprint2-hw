@@ -12,13 +12,18 @@ public interface HistoryManager {
      *
      * Добавить задачу в историю просмотра
      */
-    void addTaskToHistory (Task task);
+    void addToHistory(Task task);
+
+    /**
+     *
+     * Удалить задачу из истории просмотра задач
+     */
+    void removeFromHistory(int id);
 
     /**
      *
      * Получить историю просмотра задач
      */
     List<Task> getHistory();
-
 
 }

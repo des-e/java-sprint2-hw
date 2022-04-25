@@ -6,9 +6,7 @@ import model.Task;
 import model.Status;
 
 /**
- *
  * Менеджер задач. Основной класс с методами трекера задач
- *
  */
 
 import java.util.ArrayList;
@@ -37,7 +35,7 @@ public class InMemoryTaskManager implements Manager {
         public Task getTaskById(int id) {
             Task task = tasks.get(id);
             if (task != null) {
-                historyManager.addTaskToHistory(task);
+                historyManager.addToHistory(task);
             }
             return task;
         }
@@ -60,6 +58,7 @@ public class InMemoryTaskManager implements Manager {
         @Override
         public void deleteTask(int id) {
             tasks.remove(id);
+            historyManager.removeFromHistory(id);
         }
 
         @Override
@@ -77,7 +76,7 @@ public class InMemoryTaskManager implements Manager {
         public Task getEpicById(int id) {
             Epic epic = epics.get(id);
             if (epic != null) {
-                historyManager.addTaskToHistory(epic);
+                historyManager.addToHistory(epic);
             }
             return epic;
         }
@@ -103,8 +102,12 @@ public class InMemoryTaskManager implements Manager {
             epics.get(id).getSubtasks().clear();
             for (Subtask subtask : epics.get(id).getSubtasks()) {
                 subtasks.remove(subtask.getId());
+                historyManager.removeFromHistory(subtask.getId());
+
             }
             epics.remove(id);
+            historyManager.removeFromHistory(id);
+
         }
 
         @Override
@@ -125,7 +128,7 @@ public class InMemoryTaskManager implements Manager {
         public Subtask getSubtaskById(int id) {
             final Subtask subtask = subtasks.get(id);
             if(subtask != null) {
-                historyManager.addTaskToHistory(subtask);
+                historyManager.addToHistory(subtask);
             }
             return subtask;
         }
@@ -166,6 +169,7 @@ public class InMemoryTaskManager implements Manager {
             epics.get(epicId).getSubtasks().remove(getSubtaskById(id));
             subtasks.remove(id);
             setEpicStatus(epics.get(epicId));
+            historyManager.removeFromHistory(id);
         }
 
         @Override
@@ -174,7 +178,7 @@ public class InMemoryTaskManager implements Manager {
         }
 
 
-    /**
+        /**
         *
         * Установка статуса для эпика
         */
