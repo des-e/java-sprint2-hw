@@ -11,8 +11,8 @@ public class InMemoryHistoryManager implements HistoryManager {
 
     private Map<Integer, Node<Task>> customLinkedList = new HashMap<>();
 
-    Node<Task> first;
-    Node<Task> last;
+    private Node<Task> first;
+    private Node<Task> last;
 
     private static class Node<E> {
         E item;
@@ -26,7 +26,7 @@ public class InMemoryHistoryManager implements HistoryManager {
         }
     }
 
-    void linkLast(Task task) {
+    private void linkLast(Task task) {
         final Node<Task> lastNode = last;
         final Node<Task> newNode = new Node<>(lastNode, task, null);
         last = newNode;
@@ -38,14 +38,13 @@ public class InMemoryHistoryManager implements HistoryManager {
         }
     }
 
-    public List<Task> getTasksForHistory() {
+    private List<Task> getTasksForHistory() {
         List<Task> list = new ArrayList<>();
         Node<Task> node = first;
         while (node != null) {
             list.add(node.item);
             node = node.next;
         }
-        System.out.println(list.size());
         return list;
     }
 
