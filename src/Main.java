@@ -57,7 +57,7 @@ public class Main {
         printHistory(manager);
 
         // удалите задачу, которая есть в истории, и проверьте, что при печати она не будет выводиться;
-        manager.deleteTask(1);
+        manager.deleteTask(2);
 
         printHistory(manager);
 

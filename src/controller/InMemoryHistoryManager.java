@@ -60,8 +60,9 @@ public class InMemoryHistoryManager implements HistoryManager {
             } else {
                 final Node<Task> prev = node.prev;
                 final Node<Task> next = node.next;
-                node.prev.next = next;
                 node.next.prev = prev;
+                node.prev.next = next;
+
             }
     }
 

@@ -15,11 +15,11 @@ import java.util.List;
 import java.util.Objects;
 
 public class InMemoryTaskManager implements Manager {
-    private int generatorId;
-    private HashMap<Integer, Task> tasks = new HashMap<>();
-    private HashMap<Integer, Epic> epics = new HashMap<>();
-    private HashMap<Integer, Subtask> subtasks = new HashMap<>();
-    private HistoryManager historyManager = Managers.getDefaultHistory();
+    protected int generatorId;
+    protected static HashMap<Integer, Task> tasks = new HashMap<>();
+    protected HashMap<Integer, Epic> epics = new HashMap<>();
+    protected HashMap<Integer, Subtask> subtasks = new HashMap<>();
+    protected static HistoryManager historyManager = Managers.getDefaultHistory();
 
     @Override
     public ArrayList<Task> getTasks() {
@@ -51,7 +51,7 @@ public class InMemoryTaskManager implements Manager {
     }
 
     @Override
-    public void updateTask(Task task) {
+    public void updateTask(Task task){
         if (!tasks.containsKey((task.getId()))) {
             return;
         }
@@ -60,8 +60,8 @@ public class InMemoryTaskManager implements Manager {
 
     @Override
     public void deleteTask(int id) {
-        tasks.remove(id);
         historyManager.removeFromHistory(id);
+        tasks.remove(id);
     }
 
     @Override

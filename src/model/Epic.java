@@ -21,6 +21,11 @@ public class Epic extends Task{
         this.listOfSubtasks = subtasks;
     }
 
+    public TaskType getType() {
+        return TaskType.EPIC;
+    }
+
+
     @Override
     public String toString() {
         return "Epic name: '" + getName() + '\'' +
